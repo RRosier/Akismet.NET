@@ -41,22 +41,13 @@ namespace Rosier.Akismet.Net
             var keyValues = new List<KeyValuePair<string, string>>();
             keyValues.Add(new KeyValuePair<string, string>("key", this.apiKey));
             keyValues.Add(new KeyValuePair<string, string>("blog", this.blog.ToString()));
-            keyValues.Add(new KeyValuePair<string, string>("content", "This is some content"));
 
-            var host = new Uri("http://rest.akismet.com");
             var path = "/1.1/verify-key";
-            // Application Name/Version | Plugin/Version
-            var userAgent = string.Format("{0} | Akismet.Net/0.1", this.applicationName);
 
-            var handler = new HttpClientHandler();
-            var client = new HttpClient(handler);
-            client.BaseAddress = host;
+            var client = CreateClient(false);
 
             var request = new HttpRequestMessage(HttpMethod.Post, path);
             request.Content = new FormUrlEncodedContent(keyValues);
-
-            // TODO-rro: add as default header.
-            request.Headers.Add("User-Agent", userAgent);
 
             var response = await client.SendAsync(request);
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
@@ -71,6 +62,26 @@ namespace Rosier.Akismet.Net
             // TODO-rro: handle other status codes.
 
             return this.keyVerified;
+        }
+
+        private HttpClient CreateClient(bool includeKey)
+        {
+            // Application Name/Version | Plugin/Version
+            var userAgent = string.Format("{0} | Akismet.Net/0.1", this.applicationName);
+            string uriPrefix = string.Empty;
+            if (includeKey)
+            {
+                uriPrefix = this.apiKey + ".";
+            }
+
+            Uri baseUri = new Uri(String.Format("http://{0}rest.akismet.com", uriPrefix));
+
+            var handler = new HttpClientHandler();
+            var client = new HttpClient(handler);
+            client.BaseAddress = baseUri;
+            client.DefaultRequestHeaders.Add("User-Agent", userAgent);
+
+            return client;
         }
     }
 }
