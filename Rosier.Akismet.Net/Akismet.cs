@@ -42,11 +42,9 @@ namespace Rosier.Akismet.Net
             keyValues.Add(new KeyValuePair<string, string>("key", this.apiKey));
             keyValues.Add(new KeyValuePair<string, string>("blog", this.blog.ToString()));
 
-            var path = "/1.1/verify-key";
-
             var client = CreateClient(false);
 
-            var request = new HttpRequestMessage(HttpMethod.Post, path);
+            var request = new HttpRequestMessage(HttpMethod.Post, AkismetUrls.VerifyKey);
             request.Content = new FormUrlEncodedContent(keyValues);
 
             var response = await client.SendAsync(request);
@@ -62,6 +60,66 @@ namespace Rosier.Akismet.Net
             // TODO-rro: handle other status codes.
 
             return this.keyVerified;
+        }
+
+        /// <summary>
+        /// Validtes the comment asynchronous.
+        /// </summary>
+        /// <param name="comment">The comment.</param>
+        /// <returns>
+        ///   <c>Spam</c> when the comment is spam, <c>Ham</c> when the comment is Ham aor <c>Invalid</c> when an error occured.
+        /// </returns>
+        /// <exception cref="System.ArgumentException"> when the API key is not validated.</exception>
+        public async Task<CommentCheck> CheckCommentAsync(AkismetComment comment)
+        {
+            if (!this.keyVerified)
+            {
+                throw new ArgumentException("The API key is not verified. Call first the VerifyKey method.");
+            }
+
+            var keyvalues = comment.CreateKeyValues();
+            var client = CreateClient(true);
+            var request = new HttpRequestMessage(HttpMethod.Post, AkismetUrls.ValidateComment);
+            request.Content = new FormUrlEncodedContent(keyvalues);
+
+            var response = await client.SendAsync(request);
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                var responseString = await response.Content.ReadAsStringAsync();
+
+                switch (responseString)
+                {
+                    case "true": return CommentCheck.Spam;
+                    case "false": return CommentCheck.Ham;
+                    // TODO-rro: save error message in Errors property.
+                    case "invalid": return CommentCheck.Invalid;
+                    default: return CommentCheck.Invalid;
+                }
+            }
+
+            return CommentCheck.Invalid;
+        }
+
+        /// <summary>
+        /// Submits the comment as spam.
+        /// </summary>
+        /// <param name="comment">The comment.</param>
+        /// <returns></returns>
+        /// <exception cref="System.NotImplementedException"></exception>
+        public async Task<bool> SubmitSpam(AkismetComment comment)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Submits the comment as the ham.
+        /// </summary>
+        /// <param name="comment">The comment.</param>
+        /// <returns></returns>
+        /// <exception cref="System.NotImplementedException"></exception>
+        public async Task<bool> SubmitHam(AkismetComment comment)
+        {
+            throw new NotImplementedException();
         }
 
         private HttpClient CreateClient(bool includeKey)

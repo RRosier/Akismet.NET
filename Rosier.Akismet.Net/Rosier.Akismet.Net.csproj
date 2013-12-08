@@ -40,6 +40,8 @@
   <ItemGroup>
     <Compile Include="Akismet.cs" />
     <Compile Include="AkismetComment.cs" />
+    <Compile Include="AkismetUrls.cs" />
+    <Compile Include="CommentCheck.cs" />
     <Compile Include="CommentTypes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -71,24 +71,23 @@ namespace Rosier.Akismet.Net
         public string CommentContent { get; set; }
 
         /// <summary>
-        /// To the URL string representing this comment instance.
+        /// Creates the key value pairs.
         /// </summary>
-        /// <returns>The comment details, formatted to be send to Akismet for verification.</returns>
-        public string ToUrlString()
+        /// <returns>Enumerable of KeyValuePair objects for each property of the comment.</returns>
+        internal IEnumerable<KeyValuePair<string, string>> CreateKeyValues()
         {
-            var queryString = string.Format("blog={0}&user_ip={1}&user_agent={2}&referrer={3}&permalink={4}&comment_type={5}" +
-                "&comment_author={6}&comment_author_email={7}&comment_author_url={8}&comment_content={9}",
-                Uri.EscapeDataString(this.Blog.ToString()),
-                Uri.EscapeDataString(this.UserIp),
-                Uri.EscapeDataString(this.UserAgent),
-                Uri.EscapeDataString(this.Referrer),
-                Uri.EscapeDataString(this.Permalink),
-                Uri.EscapeDataString(this.CommentType),
-                Uri.EscapeDataString(this.CommentAuthor),
-                Uri.EscapeDataString(this.CommentAuthorEmail),
-                Uri.EscapeDataString(this.CommentContent));
+            var list = new List<KeyValuePair<string, string>>();
+            list.Add(new KeyValuePair<string, string>("blog", this.Blog.ToString()));
+            list.Add(new KeyValuePair<string, string>("user_ip", this.UserIp));
+            list.Add(new KeyValuePair<string, string>("referrer", this.Referrer));
+            list.Add(new KeyValuePair<string, string>("permalink", this.Permalink));
+            list.Add(new KeyValuePair<string, string>("comment_type", this.CommentType));
+            list.Add(new KeyValuePair<string, string>("comment_author", this.CommentAuthor));
+            list.Add(new KeyValuePair<string, string>("comment_author_email", this.CommentAuthorEmail));
+            list.Add(new KeyValuePair<string, string>("comment_author_url", this.CommentAuthorUrl));
+            list.Add(new KeyValuePair<string, string>("comment_content", this.CommentContent));
 
-            return queryString;
+            return list;
         }
     }
 }
