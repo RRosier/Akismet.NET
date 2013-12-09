@@ -122,6 +122,16 @@ namespace Rosier.Akismet.Net
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Creates an <see cref="AkismetComment"/> object for the specified blog.
+        /// </summary>
+        /// <returns></returns>
+        public AkismetComment CreateComment()
+        {
+            var comment = new AkismetComment(this.blog);
+            return comment;
+        }
+
         private HttpClient CreateClient(bool includeKey)
         {
             // Application Name/Version | Plugin/Version

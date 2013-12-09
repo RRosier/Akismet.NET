@@ -10,14 +10,29 @@ namespace Rosier.Akismet.Net
     /// </summary>
     public class AkismetComment
     {
+        private Uri permalink;
+
         /// <summary>
-        /// Gets or sets the front page or home URL of the instance making the request. For a blog or wiki this ould be the front page.
+        /// Initializes a new instance of the <see cref="AkismetComment"/> class.
         /// </summary>
+        /// <param name="blog">The base URI used for the blog.</param>
+        public AkismetComment(Uri blog)
+        {
+            this.Blog = blog;
+            this.permalink = blog;
+        }
+
+        /// <summary>
+        /// Gets the front page or home URL of the instance making the request. For a blog or wiki this ould be the front page.
+        /// </summary>
+        /// <value>
+        /// The blog.
+        /// </value>
+        /// TODO-rro: Is Required
         /// <remarks>
         /// Must be a full URI, including http://
         /// </remarks>
-        /// TODO-rro: Is Required
-        public Uri Blog { get; set; }
+        public Uri Blog { get; private set; }
 
         /// <summary>
         /// Gets or sets the IP address of the comment submitter.
@@ -43,7 +58,7 @@ namespace Rosier.Akismet.Net
         /// <summary>
         /// Gets or sets the permalink location of the entry the comment was submitted to.
         /// </summary>
-        public string Permalink { get; set; }
+        public string Permalink { get { return this.permalink.AbsolutePath; } set { this.permalink = new Uri(this.Blog, value); } }
 
         /// <summary>
         /// Gets or sets the type of the comment - one of the <see cref="CommentTypes"/> or a made up value like "registration".
@@ -80,7 +95,7 @@ namespace Rosier.Akismet.Net
             list.Add(new KeyValuePair<string, string>("blog", this.Blog.ToString()));
             list.Add(new KeyValuePair<string, string>("user_ip", this.UserIp));
             list.Add(new KeyValuePair<string, string>("referrer", this.Referrer));
-            list.Add(new KeyValuePair<string, string>("permalink", this.Permalink));
+            list.Add(new KeyValuePair<string, string>("permalink", this.permalink.ToString()));
             list.Add(new KeyValuePair<string, string>("comment_type", this.CommentType));
             list.Add(new KeyValuePair<string, string>("comment_author", this.CommentAuthor));
             list.Add(new KeyValuePair<string, string>("comment_author_email", this.CommentAuthorEmail));
