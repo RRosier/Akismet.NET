@@ -78,7 +78,7 @@ namespace Rosier.Akismet.Net
             }
 
             var keyvalues = comment.CreateKeyValues();
-            var client = CreateClient(true);
+            var client = this.CreateClient(true);
             var request = new HttpRequestMessage(HttpMethod.Post, AkismetUrls.ValidateComment);
             request.Content = new FormUrlEncodedContent(keyvalues);
 
@@ -105,10 +105,28 @@ namespace Rosier.Akismet.Net
         /// </summary>
         /// <param name="comment">The comment.</param>
         /// <returns></returns>
-        /// <exception cref="System.NotImplementedException"></exception>
         public async Task<bool> SubmitSpam(AkismetComment comment)
         {
-            throw new NotImplementedException();
+            if (!this.keyVerified)
+            {
+                throw new ArgumentException("The API key is not verified. Call first the VerifyKey method.");
+            }
+
+            var keyvalues = comment.CreateKeyValues();
+            var client = this.CreateClient(true);
+            var request = new HttpRequestMessage(HttpMethod.Post, AkismetUrls.SubmitSpam);
+            request.Content = new FormUrlEncodedContent(keyvalues);
+
+            var response = await client.SendAsync(request);
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                var responseString = await response.Content.ReadAsStringAsync();
+                // TODO-rro: handle error message.
+                return responseString.Equals("Thanks for making the web a better place.");
+            }
+
+            // TODO-rro: handle error message.
+            return false;
         }
 
         /// <summary>
@@ -119,7 +137,26 @@ namespace Rosier.Akismet.Net
         /// <exception cref="System.NotImplementedException"></exception>
         public async Task<bool> SubmitHam(AkismetComment comment)
         {
-            throw new NotImplementedException();
+            if (!this.keyVerified)
+            {
+                throw new ArgumentException("The API key is not verified. Call first the VerifyKey method.");
+            }
+
+            var keyvalues = comment.CreateKeyValues();
+            var client = this.CreateClient(true);
+            var request = new HttpRequestMessage(HttpMethod.Post, AkismetUrls.SubmitHam);
+            request.Content = new FormUrlEncodedContent(keyvalues);
+
+            var response = await client.SendAsync(request);
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                var responseString = await response.Content.ReadAsStringAsync();
+                // TODO-rro: handle error message.
+                return responseString.Equals("Thanks for making the web a better place.");
+            }
+
+            // TODO-rro: handle error message.
+            return false;
         }
 
         /// <summary>
