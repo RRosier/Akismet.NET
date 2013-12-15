@@ -7,11 +7,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Rosier.Akismet.Net")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription(".NET wrapper for the Akismet anti-spam validation service.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Schlumberger")]
+[assembly: AssemblyCompany("RonaldRosier.NET")]
 [assembly: AssemblyProduct("Rosier.Akismet.Net")]
-[assembly: AssemblyCopyright("Copyright © Schlumberger 2013")]
+[assembly: AssemblyCopyright("Copyright © Ronald Rosier 2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: NeutralResourcesLanguage("en")]
