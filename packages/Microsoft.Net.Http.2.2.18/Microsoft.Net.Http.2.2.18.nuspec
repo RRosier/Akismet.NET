@@ -6,10 +6,10 @@
     <title>Microsoft HTTP Client Libraries</title>
     <authors>Microsoft</authors>
     <owners>Microsoft</owners>
-    <licenseUrl>http://go.microsoft.com/fwlink/?LinkId=329770</licenseUrl>
-    <projectUrl>http://go.microsoft.com/fwlink/?LinkID=280055</projectUrl>
+    <licenseUrl>https://github.com/RRosier/Akismet.NET/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/RRosier/Akismet.NET</projectUrl>
     <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288859</iconUrl>
-    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>This package includes HttpClient for sending requests over HTTP, as well as HttpRequestMessage and HttpResponseMessage for processing HTTP messages.
 
 This package is not supported in Visual Studio 2010, and is only required for projects targeting .NET Framework 4.5 or .NET for Windows Store apps when consuming a library that uses this package.

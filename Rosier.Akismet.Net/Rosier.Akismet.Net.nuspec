@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <licenseUrl>https://github.com/RRosier/Akismet.NET/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/RRosier/Akismet.NET</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>.NET portable async library for verifying comments with Akismet.</description>
+    <releaseNotes>First release.
+	See the project site for more information.
+	</releaseNotes>
+    <copyright>Copyright Ronald Rosier 2013</copyright>
+	<language>en-US</language>
+    <tags>Akismet web spam async</tags>
+    <dependencies>
+      <dependency id="Microsoft.Bcl.Async" version="1.0.165" />
+	  <dependency id="Microsoft.Net.Http" version="2.2.18" />
+    </dependencies>
+  </metadata>
+</package>

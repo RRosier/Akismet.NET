@@ -36,6 +36,7 @@
     <!-- A reference to the entire .NET Framework is automatically included -->
     <None Include="app.config" />
     <None Include="packages.config" />
+    <None Include="Rosier.Akismet.Net.nuspec" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Akismet.cs" />
