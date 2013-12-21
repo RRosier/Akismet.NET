@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,7 +16,8 @@ namespace Rosier.Akismet.Net
     {
         private readonly string apiKey;
         private readonly Uri blog;
-        private readonly string applicationName;
+        private readonly string applicationName = null;
+        static private string pluginInfo = null;
 
         private bool keyVerified = false;
 
@@ -27,9 +29,11 @@ namespace Rosier.Akismet.Net
         /// <param name="applicationName">The application name and version {Application Name/Version}.</param>
         public Akismet(string apiKey, Uri blog, string applicationName)
         {
+            ReadAssemblyInfo();
+
             this.apiKey = apiKey;
             this.blog = blog;
-            this.applicationName = applicationName ?? "Akismet.Net/1.0";
+            this.applicationName = applicationName ?? pluginInfo;
         }
 
         /// <summary>
@@ -172,7 +176,7 @@ namespace Rosier.Akismet.Net
         private HttpClient CreateClient(bool includeKey)
         {
             // Application Name/Version | Plugin/Version
-            var userAgent = string.Format("{0} | Akismet.Net/0.1", this.applicationName);
+            var userAgent = string.Format("{0} | {1}", this.applicationName, pluginInfo);
             string uriPrefix = string.Empty;
             if (includeKey)
             {
@@ -187,6 +191,21 @@ namespace Rosier.Akismet.Net
             client.DefaultRequestHeaders.Add("User-Agent", userAgent);
 
             return client;
+        }
+
+        private static void ReadAssemblyInfo()
+        {
+            if (pluginInfo != null)
+                return;
+
+            // TODO-rro: is their no better way to get this information from a portable class library?
+            var assemblyFullName = Assembly.GetExecutingAssembly().FullName;
+
+            var splitAssemblyName = assemblyFullName.Split(',');
+            var assemblyName = splitAssemblyName[0].Trim();
+            var version = splitAssemblyName[1].Split('=')[1];
+
+            pluginInfo = string.Format("{0}/{1}", assemblyName, version);
         }
     }
 }

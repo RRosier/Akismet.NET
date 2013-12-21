@@ -10,12 +10,14 @@ namespace Rosier.Akismet.Net.Tests
 {
     public class AkismetTests
     {
+        private const string ApplicationName = "Rosier.Akismet.NET-Tests/1.0.0.0";
+
         [Fact]
         public async Task VerifyKey_Success()
         {
             var key = ConfigurationManager.AppSettings["apiKey"];
 
-            var akismet = new Akismet(key, new Uri("http://www.mysite.com"), "Akismet.NET-Test/1.0");
+            var akismet = new Akismet(key, new Uri("http://www.mysite.com"), ApplicationName);
             var isValid = await akismet.VerifyKeyAsync();
 
             Assert.True(isValid);
@@ -26,7 +28,7 @@ namespace Rosier.Akismet.Net.Tests
         {
             var key = "somefakekeyforunittesting";
 
-            var akismet = new Akismet(key, new Uri("http://www.mysite.com"), "Akismet.NET-Test/1.0");
+            var akismet = new Akismet(key, new Uri("http://www.mysite.com"), ApplicationName);
             var isValid = await akismet.VerifyKeyAsync();
 
             Assert.False(isValid);
@@ -36,7 +38,7 @@ namespace Rosier.Akismet.Net.Tests
         public async Task CheckComment_Spam()
         {
             var key = ConfigurationManager.AppSettings["apiKey"];
-            var akismet = new Akismet(key, new Uri("http://www.mysite.com"), "Akismet.NET-Test/1.0");
+            var akismet = new Akismet(key, new Uri("http://www.mysite.com"), ApplicationName);
             Assert.True(await akismet.VerifyKeyAsync());
 
             var comment = akismet.CreateComment();
