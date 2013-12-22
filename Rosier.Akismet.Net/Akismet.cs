@@ -109,7 +109,7 @@ namespace Rosier.Akismet.Net
         /// </summary>
         /// <param name="comment">The comment.</param>
         /// <returns></returns>
-        public async Task<bool> SubmitSpam(AkismetComment comment)
+        public async Task<bool> SubmitSpamAsync(AkismetComment comment)
         {
             if (!this.keyVerified)
             {
@@ -139,7 +139,7 @@ namespace Rosier.Akismet.Net
         /// <param name="comment">The comment.</param>
         /// <returns></returns>
         /// <exception cref="System.NotImplementedException"></exception>
-        public async Task<bool> SubmitHam(AkismetComment comment)
+        public async Task<bool> SubmitHamAsync(AkismetComment comment)
         {
             if (!this.keyVerified)
             {

@@ -53,6 +53,7 @@ namespace Rosier.Akismet.Net.Tests
             comment.CommentContent = "Howdy! I simply would like to offer you a big thumbs up for your excellent info you have here on this post. I will be returning to your site for more soon.";
 
             var result = await akismet.CheckCommentAsync(comment);
+
             Assert.Equal(CommentCheck.Spam, result);
         }
 
