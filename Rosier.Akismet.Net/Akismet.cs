@@ -73,14 +73,8 @@ namespace Rosier.Akismet.Net
         /// <returns>
         ///   <c>Spam</c> when the comment is spam, <c>Ham</c> when the comment is Ham aor <c>Invalid</c> when an error occured.
         /// </returns>
-        /// <exception cref="System.ArgumentException"> when the API key is not validated.</exception>
         public async Task<CommentCheck> CheckCommentAsync(AkismetComment comment)
         {
-            if (!this.keyVerified)
-            {
-                throw new ArgumentException("The API key is not verified. Call first the VerifyKey method.");
-            }
-
             var keyvalues = comment.CreateKeyValues();
             var client = this.CreateClient(true);
             var request = new HttpRequestMessage(HttpMethod.Post, AkismetUrls.ValidateComment);
@@ -111,11 +105,6 @@ namespace Rosier.Akismet.Net
         /// <returns></returns>
         public async Task<bool> SubmitSpamAsync(AkismetComment comment)
         {
-            if (!this.keyVerified)
-            {
-                throw new ArgumentException("The API key is not verified. Call first the VerifyKey method.");
-            }
-
             var keyvalues = comment.CreateKeyValues();
             var client = this.CreateClient(true);
             var request = new HttpRequestMessage(HttpMethod.Post, AkismetUrls.SubmitSpam);
@@ -138,14 +127,8 @@ namespace Rosier.Akismet.Net
         /// </summary>
         /// <param name="comment">The comment.</param>
         /// <returns></returns>
-        /// <exception cref="System.NotImplementedException"></exception>
         public async Task<bool> SubmitHamAsync(AkismetComment comment)
         {
-            if (!this.keyVerified)
-            {
-                throw new ArgumentException("The API key is not verified. Call first the VerifyKey method.");
-            }
-
             var keyvalues = comment.CreateKeyValues();
             var client = this.CreateClient(true);
             var request = new HttpRequestMessage(HttpMethod.Post, AkismetUrls.SubmitHam);
