@@ -51,7 +51,7 @@ namespace Rosier.Akismet.Net
             var request = new HttpRequestMessage(HttpMethod.Post, AkismetUrls.VerifyKey);
             request.Content = new FormUrlEncodedContent(keyValues);
 
-            var response = await client.SendAsync(request);
+            var response = await client.SendAsync(request).ConfigureAwait(false);
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 var responseString = await response.Content.ReadAsStringAsync();
@@ -121,7 +121,7 @@ namespace Rosier.Akismet.Net
             var request = new HttpRequestMessage(HttpMethod.Post, AkismetUrls.SubmitSpam);
             request.Content = new FormUrlEncodedContent(keyvalues);
 
-            var response = await client.SendAsync(request);
+            var response = await client.SendAsync(request).ConfigureAwait(false);
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 var responseString = await response.Content.ReadAsStringAsync();
