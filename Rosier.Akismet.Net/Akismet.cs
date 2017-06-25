@@ -19,8 +19,6 @@ namespace Rosier.Akismet.Net
         private readonly string applicationName = null;
         static private string pluginInfo = null;
 
-        private bool keyVerified = false;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="Akismet" /> class.
         /// </summary>
@@ -58,12 +56,12 @@ namespace Rosier.Akismet.Net
                 // TODO-rro: when false, save error message in Errors property.
                 ////X-akismet-server: 192.168.6.48
                 ////X-akismet-debug-help: We were unable to parse your blog URI
-                this.keyVerified = responseString.Equals("valid");
+                return responseString.Equals("valid");
             }
 
             // TODO-rro: handle other status codes.
 
-            return this.keyVerified;
+            return false;
         }
 
         /// <summary>
