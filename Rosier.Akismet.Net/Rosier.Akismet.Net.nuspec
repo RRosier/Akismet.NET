@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>$id$</id>
+    <id>Rosier.Akismet.Net</id>
     <version>$version$</version>
     <title>$title$</title>
     <authors>Ronald, Michal, Corey</authors>
@@ -12,7 +12,7 @@
     <description>.NET portable async library for verifying comments with Akismet.</description>
     <releaseNotes>Add more comment types. Remove the pre-verification check for each call. Fix async ConfigureAwait bug.
 	</releaseNotes>
-    <copyright>Copyright Ronald Rosier 2013-2017</copyright>
+    <copyright>$Copyright$</copyright>
 	<language>en-US</language>
     <tags>Akismet web spam async</tags>
     <dependencies>
