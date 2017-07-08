@@ -4,16 +4,15 @@
     <id>$id$</id>
     <version>$version$</version>
     <title>$title$</title>
-    <authors>$author$</authors>
+    <authors>Ronald, Michal, Corey</authors>
     <owners>$author$</owners>
     <licenseUrl>https://github.com/RRosier/Akismet.NET/blob/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/RRosier/Akismet.NET</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>.NET portable async library for verifying comments with Akismet.</description>
-    <releaseNotes>First release.
-	See the project site for more information.
+    <releaseNotes>Add more comment types. Remove the pre-verification check for each call. Fix async ConfigureAwait bug.
 	</releaseNotes>
-    <copyright>Copyright Ronald Rosier 2013</copyright>
+    <copyright>Copyright Ronald Rosier 2013-2017</copyright>
 	<language>en-US</language>
     <tags>Akismet web spam async</tags>
     <dependencies>
